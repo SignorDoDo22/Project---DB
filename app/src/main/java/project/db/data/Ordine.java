@@ -12,6 +12,7 @@ public class Ordine {
     private String CodiceOrdine;
     private String CodiceUtente;
     private Date dataCreazione;
+    private final String queryOrdine = "INSERT INTO Ordine (orarioCreazione, orarioConsegna, orarioConsegnato, orarioEliminazione, CodiceOrdine, CodiceUtente, prezzoTotale, dataCreazione) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     public Ordine(Time orarioCreazione, Time orarioConsegna, Time orarioConsegnato, Time orarioEliminazione, String CodiceOrdine,
         String CodiceUtente, float prezzoTotale, Date dataCreazione){
