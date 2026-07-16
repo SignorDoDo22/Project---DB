@@ -19,6 +19,4 @@ public class DAOUtils {
         }
         return statement;
     }
-
-
 }
