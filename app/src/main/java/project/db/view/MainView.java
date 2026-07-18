@@ -1,9 +1,8 @@
 package project.db.view;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-
+import project.db.controller.MainController;
 import project.db.view.Client.ClientPanel;
 
 public class MainView extends JFrame {
@@ -12,11 +11,15 @@ public class MainView extends JFrame {
     private SceltaLogin sceltaPanel;
     private CardLayout cardLayout;
     private ClientPanel client;
+    private MainController mainController;
 
-    public MainView(){
+    public MainView(final MainController mainController){
         this.setTitle("Fast Food");
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.mainController = mainController;
+
         this.sceltaPanel = new SceltaLogin(this);
         this.client = new ClientPanel();
         this.loginPanel = new LoginPanel(this);
@@ -30,8 +33,15 @@ public class MainView extends JFrame {
 
 
     public void changePanel(final String panelName){
+
+        if(panelName == "client"){
+            mainController.getControllerClient().userRequestedCatalogo();
+        }
         cardLayout.show(getContentPane(), panelName);
     }
 
+    public ClientPanel getClientPanel(){
+        return this.client;
+    }
 
 }

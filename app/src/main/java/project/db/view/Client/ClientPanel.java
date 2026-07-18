@@ -3,12 +3,16 @@ package project.db.view.Client;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.List;
+import java.util.Objects;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import project.db.controller.ControllerClientPanel;
+import project.db.data.Prodotto;
 import project.db.view.ProdottoCatalogo.ProdottoCard;
 
 public class ClientPanel extends JPanel {
@@ -19,6 +23,7 @@ public class ClientPanel extends JPanel {
     private final Carrello carrello;
     private final JButton buttonIndietro;
     private final JButton buttonProcedi;
+    private ControllerClientPanel controllerClientPanel;
 
     public ClientPanel() {
         this.setLayout(new BorderLayout());
@@ -43,9 +48,18 @@ public class ClientPanel extends JPanel {
 
         this.add(pannelloInferiore, BorderLayout.SOUTH);
         this.add(carrello, BorderLayout.EAST);
+    }
 
-        for (int i = 0; i < 50; i++) {
-            this.pannelScorrevole.add(new ProdottoCard());  // aggiunto al pannello giusto
+    public void showCatalogo(List<Prodotto> prodotti){
+        for(Prodotto p : prodotti){
+            this.pannelScorrevole.add(new ProdottoCard(p.getCodiceProdotto(), p.getNomeProdotto(),
+            p.getPrezzoOriginario(), p.isDisponibile(), p.getMenu()));
         }
     }
+
+    public void setController(final ControllerClientPanel controllerClientPanel){
+        Objects.requireNonNull(controllerClientPanel);
+        this.controllerClientPanel = controllerClientPanel;
+    }
+
 }

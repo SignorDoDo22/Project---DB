@@ -10,5 +10,8 @@ public class WritingMode {
         this.connect = connect;
     }
 
+    public boolean findProdotto(){
+        return false;
+    }
 
 }

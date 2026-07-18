@@ -51,7 +51,7 @@ public class Cliente {
             List<Cliente> utenti = new ArrayList<>();
 
             try (PreparedStatement preparedStatement =
-                         DAOUtils.prepare(connection, Queries.SHOW_UTENTI.get());
+                         DAOUtils.prepare(connection, Queries.MOSTRA_CLIENTI.get());
                  ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 while (resultSet.next()) {
@@ -83,12 +83,9 @@ public class Cliente {
         final String password, final String email, final String nome, final String cognome,
         final Date dataDiNascita, final String telefono, final boolean rider) {
 
-            String sql = """
-                INSERT INTO Utente (Codice_Utente, Username, Password, Email, Nome, Cognome, Data_di_Nascita, Telefono, Rider)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-                """;
 
-            try (PreparedStatement nuovoUtente = connection.prepareStatement(sql)) {
+
+            try (PreparedStatement nuovoUtente = connection.prepareStatement(Queries.INSERIRE_CLIENTE.get())) {
 
                 nuovoUtente.setString(1, codiceUtente);
                 nuovoUtente.setString(2, username);
