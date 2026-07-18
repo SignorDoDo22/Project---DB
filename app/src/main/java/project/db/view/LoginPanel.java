@@ -22,6 +22,7 @@ public class LoginPanel extends JPanel {
     private JPanel panelInterno;
     private MainView mainView;
     private JButton indietroButton;
+    private JButton loginButton;
 
     public LoginPanel(final MainView mainView) {
 
@@ -32,13 +33,14 @@ public class LoginPanel extends JPanel {
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.NONE; // non stirare i componenti
+        gbc.fill = GridBagConstraints.NONE;
 
         this.name = new JTextField(15);       // 15 colonne = dimensione ragionevole
         this.password = new JPasswordField(15);
         this.email = new JTextField(15);
-        this.button = new JButton("Inserisci");
+        this.button = new JButton("Registrati");
         this.indietroButton = new JButton("Indietro");
+        this.loginButton = new JButton("Login");
 
         gbc.gridx = 0; gbc.gridy = 0;
         panelInterno.add(new JLabel("Nome:"), gbc);
@@ -61,7 +63,11 @@ public class LoginPanel extends JPanel {
         panelInterno.add(button, gbc);
 
         gbc.gridx = 0; gbc.gridy = 4;
+        gbc.anchor = GridBagConstraints.CENTER;
         panelInterno.add(indietroButton, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 5;
+        panelInterno.add(loginButton, gbc);
 
 
         // Aggiungendo panelInterno al CENTER, GridBagLayout dentro di lui
@@ -74,6 +80,14 @@ public class LoginPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mainView.changePanel("scelta");
+            }
+        });
+
+        loginButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainView.changePanel("client");
             }
         });
     }
