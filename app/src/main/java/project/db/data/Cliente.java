@@ -106,58 +106,46 @@ public class Cliente {
             }
         }
 
-        public static boolean check(final Connection connection, final String codiceUtente) {
-
-            String sql = """
-                SELECT *
-                FROM Utente
-                WHERE Utente.Codice_Utente = ?;
-            """;
+        public static Cliente getCliente(final Connection connection, final String password, final String email) {
 
             try(
-                PreparedStatement preparedStatement = DAOUtils.prepare(connection, sql, codiceUtente);
+                PreparedStatement preparedStatement = DAOUtils.prepare(connection, Queries.CERCA_CLIENTE_PER_Email.get(), password, email);
+
                 ResultSet resultSet = preparedStatement.executeQuery();
             ){
-               return resultSet.next();
+                System.out.println("Query preparata: " + preparedStatement.toString());
+               if (resultSet.next()) {
+                   System.out.println("DENTRO MODEL: Utente trovato: " + resultSet.getString("Username"));
+                   return mapUtente(resultSet);
+               } else {
+                    System.out.println("DENTRO MODEL: Utente non trovato");
+                   return null;
+               }
 
             }catch(final Exception e ){
-                e.printStackTrace();
-                return false;
+                throw new DAOException("Errore durante il recupero del cliente", e);
             }
         }
 
 
-        public static Cliente find(final Connection connection, final String codiceUtente) {
-
-            String sql = """
-                SELECT *
-                FROM Utente
-                WHERE Utente.Codice_Utente = ?;
-            """;
-
+        public static boolean find(final Connection connection, final String email, final String password) {
             try (
-                var statement = DAOUtils.prepare(connection, sql, codiceUtente);
+                var statement = DAOUtils.prepare(connection, Queries.CERCA_CLIENTE_PER_Email.get(), email, password);
                 var resultSet = statement.executeQuery();
             ) {
                 if (resultSet.next()) {
-                    return new Cliente(
-                        resultSet.getString("Codice_Utente"),
-                        resultSet.getString("Username"),
-                        resultSet.getString("Password"),
-                        resultSet.getString("Email"),
-                        resultSet.getString("Nome"),
-                        resultSet.getString("Cognome"),
-                        resultSet.getDate("Data_di_Nascita"),
-                        resultSet.getString("Telefono")
-                    );
+                    System.out.println("Utente trovato: " + resultSet.getString("Username"));
+                    return true;
                 }
 
-                return null; // nessun utente trovato con quel codice
+                return false; // nessun utente trovato con quel codice
 
             } catch (final Exception e) {
                 throw new DAOException(e);
             }
         }
+
+
 
     }
 }

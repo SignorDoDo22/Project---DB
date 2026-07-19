@@ -51,16 +51,18 @@ public class Ordine {
 
                 while (result.next()) {
 
-                    var dataCreazione = result.getDate(null);
-                    var prezzoTotale = result.getFloat(null);
-                    var consegnato = result.getTime(null);
-                    var inConsegna = result.getTime(null);
-                    var indVia = result.getTime(null);
-                    var indCittà = result.getTime(null);
-                    var indCivico = result.getTime(null);
-                    var codiceUtente = result.getString(null);
-                    var codiceordine = result.getString(null);
-                    Ordine ordine = new Ordine(dataCreazione, prezzoTotale, codiceordine, codiceordine, codiceordine, codiceUtente, codiceordine);
+                    var dataCreazione = result.getDate("Data_Creazione");
+                    var prezzoTotale = result.getFloat("Prezzo_Totale");
+                    var consegnato = result.getTime("Consegnato");
+                    var inConsegna = result.getTime("In_Consegna");
+                    var indVia = result.getString("Ind_Via");
+                    var indCittà = result.getString("Ind_Città");
+                    var indCivico = result.getString("Ind_Civico");
+                    var codiceUtente = result.getString("Codice_Utente");
+                    var codiceordine = result.getString("Codice_Ordine");
+                    Ordine ordine = new Ordine(dataCreazione, prezzoTotale, indVia, indCittà, indCivico, codiceUtente, codiceordine);
+                    ordine.inConsegna = inConsegna;
+                    ordine.consegnato = consegnato;
                     listOrdine.add(ordine);
                 }
 
@@ -69,6 +71,7 @@ public class Ordine {
             }
             return listOrdine;
         }
+
 
 
     }

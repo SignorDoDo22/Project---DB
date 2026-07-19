@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import project.db.controller.DAOUtils;
 import project.db.controller.MainController;
 import project.db.model.ReadingModel;
-import project.db.model.WritingMode;
+import project.db.model.WritingModel;
 import project.db.view.MainView;
 
 public class App {
@@ -23,7 +23,7 @@ public class App {
 
        final var connection = DAOUtils.localMySQLConnection("schemarelfastfood", USER, PASSWORD);
        final var readingModel = new ReadingModel(connection);
-       final var writingModel = new WritingMode(connection);
+       final var writingModel = new WritingModel(connection);
        final var mainController = new MainController(readingModel, writingModel, connection);
 
     }

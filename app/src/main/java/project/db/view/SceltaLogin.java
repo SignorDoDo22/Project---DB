@@ -27,7 +27,7 @@ public class SceltaLogin extends JPanel {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.NONE; // non stirare i componenti
+        gbc.fill = GridBagConstraints.NONE;
 
 
         gbc.gridx = 0; gbc.gridy = 0;

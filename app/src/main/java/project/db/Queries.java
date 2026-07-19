@@ -24,6 +24,19 @@ public enum Queries {
             SELECT * FROM Ingrediente
             """),
 
+    TROVA_INGREDIENTE("""
+            SELECT * FROM Ingrediente
+            WHERE Codice_Ingrediente = ?
+
+            """),
+
+    INGREDIENTI_CONTENUTI("""
+           SELECT nome_ingrediente
+                FROM Comprende c
+                INNER JOIN Ingrediente i ON i.Codice_Ingrediente = c.Codice_Ingrediente
+                where Codice_Prodotto = ?
+           """),
+
 
     // =================================================
     // SCONTO (+ sottotipi)
@@ -71,9 +84,10 @@ public enum Queries {
             SELECT * FROM Cliente
             """),
 
-    CERCA_CLIENTE_PER_USERNAME("""
-            SELECT * FROM Cliente WHERE Username = ? AND Password = ?
+    CERCA_CLIENTE_PER_Email("""
+            SELECT * FROM Cliente WHERE Email = ? AND Password = ?
             """),
+
 
     AGGIORNA_NUM_ORDINI_CLIENTE("""
             UPDATE Cliente SET NumOrdiniEffetuati = NumOrdiniEffetuati + 1

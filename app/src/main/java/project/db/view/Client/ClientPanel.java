@@ -3,11 +3,14 @@ package project.db.view.Client;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Objects;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -48,18 +51,45 @@ public class ClientPanel extends JPanel {
 
         this.add(pannelloInferiore, BorderLayout.SOUTH);
         this.add(carrello, BorderLayout.EAST);
+
+        this.buttonIndietro.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+
+        });
     }
 
     public void showCatalogo(List<Prodotto> prodotti){
+        this.pannelScorrevole.removeAll();
         for(Prodotto p : prodotti){
             this.pannelScorrevole.add(new ProdottoCard(p.getCodiceProdotto(), p.getNomeProdotto(),
-            p.getPrezzoOriginario(), p.isDisponibile(), p.getMenu()));
+            p.getPrezzoOriginario(), p.isDisponibile(), p.getMenu(), this));
         }
+    }
+
+    public void requestIngredienti(String codice_prodotto){
+        controllerClientPanel.userRequestIngredientiProd(codice_prodotto);
+    }
+
+    public List<String> getIngredientiProdotto(List<String> ingredienti){
+        return  ingredienti;
     }
 
     public void setController(final ControllerClientPanel controllerClientPanel){
         Objects.requireNonNull(controllerClientPanel);
         this.controllerClientPanel = controllerClientPanel;
+    }
+
+    public void mostraIngredienti(List<String> ingredienti) {
+        if (ingredienti.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nessun ingrediente trovato.");
+            return;
+        }
+        String testo = String.join(", ", ingredienti);
+        JOptionPane.showMessageDialog(this, "Ingredienti: " + testo);
     }
 
 }

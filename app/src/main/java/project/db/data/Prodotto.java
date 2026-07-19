@@ -97,5 +97,29 @@ public class Prodotto {
         }
 
 
+       public static List<String> getIngredienti(final Connection connection, final String codiceProdotto) {
+
+            if (!check(connection, codiceProdotto)) {
+                return new ArrayList<>();
+            }
+
+            List<String> listaIngredienti = new ArrayList<>();
+
+            try (var preparedStatement = DAOUtils.prepare(connection, Queries.INGREDIENTI_CONTENUTI.get())) {
+                preparedStatement.setString(1, codiceProdotto);
+
+                try (var result = preparedStatement.executeQuery()) {
+                    while (result.next()) {
+                        listaIngredienti.add(result.getString("nome_ingrediente"));
+                    }
+                }
+
+            } catch (SQLException e) {
+                throw new DAOException("Errore durante il recupero degli ingredienti del prodotto", e);
+            }
+
+            return listaIngredienti;
+        }
+
     }
 }
