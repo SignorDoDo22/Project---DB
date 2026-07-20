@@ -234,13 +234,17 @@ public enum Queries {
     // =================================================
 
     INSERIRE_ORDINE("""
-            INSERT INTO Ordine (OrarioCreazione, Prezzo_totale, DataCreazione, OrarioConsegnato,
-                OrarioConsegna, Ind_Via, Ind_Citta, Ind_Civico, Codice_Ordine, Codice_Utente)
+            INSERT INTO Ordine (Prezzo_totale, DataCreazione, Ind_Via, Ind_Citta, Ind_Civico, Codice_Ordine, Codice_Utente)
             VALUES (?,?,?,?,?,?,?,?,?,?)
             """),
 
     MOSTRA_ORDINI("""
             SELECT * FROM Ordine
+            """),
+        MOSTRA_ORDINI_PRONTI("""
+            SELECT *
+            from ordine
+            where pronto=1;
             """),
 
     CERCA_ORDINE_PER_CODICE("""

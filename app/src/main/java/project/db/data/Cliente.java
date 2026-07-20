@@ -22,6 +22,7 @@ public class Cliente {
     private String cognome;
     private Date dataDiNascita;
     private String telefono;
+    private int NumOrdiniEffettuati;
 
     public Cliente(String codiceUtente, String username, String password, String email,
                   String nome, String cognome, Date dataDiNascita, String telefono) {
@@ -33,6 +34,7 @@ public class Cliente {
         this.cognome = cognome;
         this.dataDiNascita = dataDiNascita;
         this.telefono = telefono;
+        this.NumOrdiniEffettuati = 0;
     }
 
     public String getCodiceUtente() { return codiceUtente; }
@@ -43,6 +45,7 @@ public class Cliente {
     public String getCognome() { return cognome; }
     public Date getDataDiNascita() { return dataDiNascita; }
     public String getTelefono() { return telefono; }
+    public int getNumOrdiniEffettuati() { return NumOrdiniEffettuati; }
 
 
     public static class DAO {
@@ -96,6 +99,7 @@ public class Cliente {
                 nuovoUtente.setDate(7, new java.sql.Date(dataDiNascita.getTime())); // see note below
                 nuovoUtente.setString(8, telefono);
                 nuovoUtente.setBoolean(9, rider);
+                nuovoUtente.setInt(10, 0);
 
                 int rowsInserted = nuovoUtente.executeUpdate();
                 return rowsInserted > 0;

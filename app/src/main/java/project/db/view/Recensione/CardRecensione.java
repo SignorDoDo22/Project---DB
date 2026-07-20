@@ -27,11 +27,6 @@ public class CardRecensione extends JPanel {
         this.setPreferredSize(new Dimension(300,0));
         this.creaRecensione = new JButton("Crea Recensione");
 
-
-
     }
-
-
-
 
 }

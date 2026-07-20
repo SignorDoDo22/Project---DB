@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import project.db.data.Cliente;
+import project.db.data.Ordine;
 import project.db.data.Prodotto;
 import project.db.data.Recensione;
 
@@ -35,6 +36,10 @@ public class ReadingModel {
 
     public boolean find(final String email, final String password) {
         return Cliente.DAO.find(connection, email, password);
+    }
+
+    public List<Ordine> loadOrdini() {
+        return Ordine.DAO.OrdearReady(connection);
     }
 
 }

@@ -29,7 +29,7 @@ public class MainView extends JFrame {
         this.loginPanel = new LoginPanel(this);
         this.registrationPanel = new RegistrazionePanel(this);
         this.cardLayout = new CardLayout();
-        this.riderPanel = new RiderPanel();
+        this.riderPanel = new RiderPanel(this.mainController.getControllerRider(), this);
         this.setLayout(cardLayout);
 
         this.add(sceltaPanel, "scelta");
@@ -57,6 +57,7 @@ public class MainView extends JFrame {
 
         if("rider".equals(panelName)) {
             cardLayout.show(getContentPane(), panelName);
+            this.mainController.getControllerRider().showOrders();
         }
 
         if("registration".equals(panelName)) {

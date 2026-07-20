@@ -3,7 +3,7 @@ package project.db.view.Rider;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
+import project.db.data.Ordine;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,11 +15,12 @@ public class OrdineRiderPanel extends JPanel {
 
     private final JButton prendiInCaricoButton;
     private final JButton consegnaButton;
-    private final String codiceOrdine;
+    private final Ordine ordine;
 
-    public OrdineRiderPanel(String codiceOrdine, String via, String citta, String civico, boolean giaPresoInCarico) {
+    public OrdineRiderPanel(Ordine ordine) {
 
-        this.codiceOrdine = codiceOrdine;
+        this.ordine = ordine;
+
 
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createCompoundBorder(
@@ -29,25 +30,19 @@ public class OrdineRiderPanel extends JPanel {
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
 
         JLabel indirizzoLabel = new JLabel(
-                String.format("Ordine %s - %s, %s (%s)", codiceOrdine, via, civico, citta));
+                String.format("Ordine %s - %s, %s (%s)", ordine.getCodiceOrdine(),
+                ordine.getIndVia(), ordine.getIndCivico(), ordine.getIndCitta()));
         this.add(indirizzoLabel, BorderLayout.WEST);
 
         JPanel azionePanel = new JPanel();
-
         this.prendiInCaricoButton = new JButton("Prendi in carico");
         this.consegnaButton = new JButton("Consegna");
 
-        if (giaPresoInCarico) {
-            azionePanel.add(consegnaButton);
-        } else {
-            azionePanel.add(prendiInCaricoButton);
-        }
 
+
+        azionePanel.add(prendiInCaricoButton);
+        azionePanel.add(consegnaButton);
         this.add(azionePanel, BorderLayout.EAST);
-    }
-
-    public String getCodiceOrdine() {
-        return codiceOrdine;
     }
 
     public JButton getPrendiInCaricoButton() {

@@ -49,6 +49,15 @@ public class SceltaLogin extends JPanel {
 
         });
 
+        this.riderButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainView.changePanel("rider");
+            }
+
+        });
+
     }
 
 }

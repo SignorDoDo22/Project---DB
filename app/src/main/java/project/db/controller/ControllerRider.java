@@ -1,7 +1,10 @@
 package project.db.controller;
 
+import project.db.data.Ordine;
 import project.db.model.ReadingModel;
 import project.db.view.Rider.RiderPanel;
+
+import java.util.List;
 
 public class ControllerRider {
 
@@ -16,7 +19,8 @@ public class ControllerRider {
     }
 
     public void showOrders(){
-
+        List<Ordine> ordini = modelReading.loadOrdini();
+        riderPanel.showOrdersReady(ordini);
     }
 
 }
