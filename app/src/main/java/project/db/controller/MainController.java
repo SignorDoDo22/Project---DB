@@ -23,7 +23,7 @@ public class MainController {
         this.connection = connection;
         this.mainView = new MainView(this);
         this.controllerLogin = new ControllerLogin(this);
-        this.controllerClient = new ControllerClientPanel(modelReading, mainView.getClientPanel());
+        this.controllerClient = new ControllerClientPanel(modelReading, mainView.getClientPanel(), this);
         this.controllerRider = new ControllerRider(this, modelReading, mainView.getRiderPanel());
         this.controllerRegistrazione = new ControllerRegistrazione(mainView.getRegistrazionePanel(), this, modelReading, writingModel);
 

@@ -50,6 +50,7 @@ public class Categoria {
             return categorie;
         }
 
+        /*
         public boolean checkByName(final Connection connection, final String idCategoria) {
             try (PreparedStatement preparedStatement = DAOUtils.prepare(connection, Queries.CHECK_CATEGORIA.get())) {
                 preparedStatement.setString(1, idCategoria);
@@ -59,20 +60,10 @@ public class Categoria {
             } catch (SQLException e) {
                 throw new DAOException("Error checking if category exists", e);
             }
-
         }
+        */
 
-        public boolean checkByNome(final Connection connection, final String nomeCategoria) {
-            try (PreparedStatement preparedStatement = DAOUtils.prepare(connection, Queries.CHECK_NOME_CATEGORIA.get())) {
-                preparedStatement.setString(1, nomeCategoria);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    return resultSet.next();
-                }
-            } catch (SQLException e) {
-                throw new DAOException("Error checking if category name exists", e);
-            }
 
-        }
     }
 
 

@@ -165,7 +165,35 @@ public class Ordine {
             return ordiniPronti;
         }
 
+        public static List<Ordine> listOrdiniRecensibili(Connection connection, String codiceUtente) {
+            List<Ordine> ordiniRecensibili = new ArrayList<>();
 
+            try (var preparedStatement = DAOUtils.prepare(connection, Queries.MOSTRA_ORDINI_RECENSIBILI.get())) {
+                preparedStatement.setString(1, codiceUtente);
+                try (ResultSet result = preparedStatement.executeQuery()) {
+                    while (result.next()) {
+                        var dataCreazione = result.getDate("DataCreazione");
+                        var consegnato = result.getTime("OrarioConsegnato");
+                        var consegnatoBool = result.getBoolean("Pronto");
+                        var inConsegna = result.getTime("OrarioInConsegna");
+                        var inPreparazione = result.getTime("OrarioPreparazione");
+                        var indVia = result.getString("Ind_Via");
+                        var indCittà = result.getString("Ind_Citta");
+                        var indCivico = result.getString("Ind_Civico");
+                        var codiceordine = result.getString("Codice_Ordine");
+                        Ordine ordine = new Ordine(dataCreazione, indVia, indCittà, indCivico, codiceUtente, codiceordine);
+                        ordine.setInPreparazione(inPreparazione);
+                        ordine.setInConsegna(inConsegna);
+                        ordine.setConsegnato(consegnato);
+                        ordine.setPronto(consegnatoBool);
+                        ordiniRecensibili.add(ordine);
+                    }
+                }
+            } catch (Exception e) {
+                throw new DAOException("Errore nel caricamento degli ordini recensibili", e);
+            }
+            return ordiniRecensibili;
+        }
 
     }
 

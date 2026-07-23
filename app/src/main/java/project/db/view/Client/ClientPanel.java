@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.swing.BoxLayout;
@@ -16,11 +17,13 @@ import javax.swing.JScrollPane;
 
 import project.db.controller.ControllerClientPanel;
 import project.db.data.Prodotto;
+import project.db.view.MainView;
 import project.db.view.ProdottoCatalogo.ProdottoCard;
 
 public class ClientPanel extends JPanel {
 
     private final JPanel pannelloInferiore;
+    private final MainView mainView;
     private final JScrollPane pannelloCentrale;
     private final JPanel pannelScorrevole;
     private final Carrello carrello;
@@ -28,7 +31,8 @@ public class ClientPanel extends JPanel {
     private final JButton buttonProcedi;
     private ControllerClientPanel controllerClientPanel;
 
-    public ClientPanel() {
+    public ClientPanel(final MainView mainView) {
+        this.mainView = mainView;
         this.setLayout(new BorderLayout());
         this.carrello = new Carrello(this);
         this.carrello.setPreferredSize(new Dimension(225,0));
@@ -56,15 +60,17 @@ public class ClientPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                mainView.changePanel("scelta");
             }
 
         });
     }
 
     public void showCatalogo(List<Prodotto> prodotti){
+        System.out.println("Mostro catalogo con " + prodotti.size() + " prodotti");
         this.pannelScorrevole.removeAll();
         for(Prodotto p : prodotti){
+            System.out.println("Aggiungo prodotto: " + p.getNomeProdotto());
             this.pannelScorrevole.add(new ProdottoCard(p.getCodiceProdotto(), p.getNomeProdotto(),
             p.getPrezzoOriginario(), p.isDisponibile(), p.getMenu(), this));
         }
@@ -88,8 +94,32 @@ public class ClientPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Nessun ingrediente trovato.");
             return;
         }
+
         String testo = String.join(", ", ingredienti);
         JOptionPane.showMessageDialog(this, "Ingredienti: " + testo);
     }
 
+    public void requestIngredientiMenu(String codiceProdottoMenu){
+        controllerClientPanel.userRequestIngredientiMenu(codiceProdottoMenu);
+    }
+
+    public void mostraIngredientiMenu(Map<String, List<String>> ingredientiMenu) {
+        if (ingredientiMenu.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nessun ingrediente trovato per il menu.");
+            return;
+        }
+
+        StringBuilder testo = new StringBuilder();
+        for (Map.Entry<String, List<String>> entry : ingredientiMenu.entrySet()) {
+            String prodotto = entry.getKey();
+            List<String> ingredienti = entry.getValue();
+            testo.append(prodotto).append(": ").append(String.join(", ", ingredienti)).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(this, "Ingredienti del menu:\n" + testo.toString());
+    }
+
+    public void addRigaCarrello(int quantita, String nomeProdotto, float prezzoUnitario) {
+        carrello.addRigaCarrello(quantita, nomeProdotto, prezzoUnitario);
+    }
 }

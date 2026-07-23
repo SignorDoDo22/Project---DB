@@ -25,7 +25,7 @@ public class MainView extends JFrame {
         this.mainController = mainController;
 
         this.sceltaPanel = new SceltaLogin(this);
-        this.client = new ClientPanel();
+        this.client = new ClientPanel(this);
         this.loginPanel = new LoginPanel(this);
         this.registrationPanel = new RegistrazionePanel(this);
         this.cardLayout = new CardLayout();
@@ -52,6 +52,7 @@ public class MainView extends JFrame {
 
         if("client".equals(panelName) && mainController.getControllerLogin().tryLogin()) {
             cardLayout.show(getContentPane(), panelName);
+            System.out.println("Cambio pannello a client");
             this.mainController.getControllerClient().userRequestedCatalogo();
         }
 

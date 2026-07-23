@@ -108,6 +108,10 @@ public enum Queries {
             SELECT * FROM Rider WHERE Username = ? AND Password = ?
             """),
 
+    CERCA_RIDER_PER_CODICE("""
+            SELECT * FROM Rider WHERE Codice_Utente = ?
+            """),
+
     AGGIORNA_MEDIA_RIDER("""
             UPDATE Rider
             SET RaitingMedioRider = (
@@ -123,6 +127,17 @@ public enum Queries {
             UPDATE Rider SET Ordini_Totali_Consegnati = Ordini_Totali_Consegnati + 1
             WHERE Codice_Utente = ?
             """),
+
+    AGGIORNA_GUADAGNO_TOTALE_RIDER("""
+            UPDATE Rider
+            SET GuadagnoTotale = GuadagnoTotale + ?
+            WHERE Codice_Utente = ?;
+            """),
+    RIDER_PRENDE_IN_CARICO("""
+           INSERT INTO Prende_in_carico (Codice_Ordine, Compenso_Rider, Codice_Utente)
+           VALUES (?, ?, ?)
+            """),
+
 
 
     // =================================================
@@ -196,6 +211,8 @@ public enum Queries {
             """),
 
 
+
+
     // =================================================
     // COMPRENDE / COMPOSTO_MENU
     // =================================================
@@ -205,9 +222,17 @@ public enum Queries {
             """),
 
     MOSTRA_RICETTA_PRODOTTO("""
-            SELECT i.* FROM Comprende c
+            SELECT i.Nome_Ingrediente, c.quantita
+            FROM Comprende c
             JOIN Ingrediente i ON i.Codice_Ingrediente = c.Codice_Ingrediente
             WHERE c.Codice_Prodotto = ?
+            """),
+
+    MOSTRA_SINGOLO_INGREDIENTE("""
+        SELECT i.Nome_Ingrediente, c.quantita
+            FROM  Ingrediente i
+            JOIN Comprende c ON i.Codice_Ingrediente = c.Codice_Ingrediente
+            WHERE c.Codice_Prodotto = 'M01' and c.Codice_Ingrediente = 'I11';
             """),
 
     INSERIRE_COMPOSTO_MENU("""
@@ -215,7 +240,8 @@ public enum Queries {
             """),
 
     MOSTRA_COMPONENTI_MENU_CATALOGO("""
-            SELECT p.*, cm.quantita FROM CompostoMenu cm
+            SELECT p.*, cm.quantita
+            FROM CompostoMenu cm
             JOIN Prodotto p ON p.Codice_Prodotto = cm.Codice_Prodotto
             WHERE cm.Codice_Prodotto_Menu = ?
             """),
@@ -366,7 +392,7 @@ public enum Queries {
             """),
 
     MOSTRA_MODIFICHE_RIGA_SINGOLA("""
-            SELECT m.Tipo, i.Nome_Ingrediente
+            SELECT m.Tipo, i.Nome_Ingrediente, m.Quantita
             FROM ModificaProdottoSingolo m
             JOIN Ingrediente i ON i.Codice_Ingrediente = m.Codice_Ingrediente
             WHERE m.Codice_Ordine = ? AND m.CodiceRiga = ?
@@ -394,13 +420,15 @@ public enum Queries {
             """),
 
     MOSTRA_ORDINI_RECENSIBILI("""
-            SELECT o.Codice_Ordine
-            FROM Ordine o
-            WHERE o.Codice_Utente = ?
-              AND o.OrarioConsegnato IS NOT NULL
-              AND NOT EXISTS (SELECT 1 FROM Recensione r WHERE r.Codice_Ordine = o.Codice_Ordine)
-            ORDER BY o.OrarioConsegnato DESC
-            """);
+                SELECT o.*
+                FROM ordine o
+                WHERE o.Codice_Utente = ?
+                AND NOT EXISTS (
+                SELECT 1
+                FROM recensione r
+                WHERE r.Codice_Ordine = o.Codice_Ordine
+                );
+        """);
 
 
     private final String query;

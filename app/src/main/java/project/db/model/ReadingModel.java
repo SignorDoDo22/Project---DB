@@ -2,11 +2,13 @@ package project.db.model;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import project.db.data.Cliente;
 import project.db.data.Ordine;
 import project.db.data.Prodotto;
+import project.db.data.ProdottoMenu;
 import project.db.data.Recensione;
 
 public class ReadingModel {
@@ -40,6 +42,14 @@ public class ReadingModel {
 
     public List<Ordine> loadOrdini() {
         return Ordine.DAO.OrdearReady(connection);
+    }
+
+    public List<Ordine> loadOrdiniRecensibili(final String codiceUtente) {
+        return Ordine.DAO.listOrdiniRecensibili(connection, codiceUtente);
+    }
+
+    public Map<String, List<String>> loadIngredientiMenu(final String codiceProdottoMenu) {
+        return ProdottoMenu.DAO.getIngredienti(connection, codiceProdottoMenu);
     }
 
 }

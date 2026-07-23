@@ -18,6 +18,7 @@ public class ProdottoCard extends JPanel {
 
     private final JButton aggiungiProdotto;
     private final JButton infoProdotto;
+    private final JButton modificaProdotto;
     private final String codiceProdotto;
     private final String isMenu;
     private ClientPanel clientPanel;
@@ -29,6 +30,7 @@ public class ProdottoCard extends JPanel {
         this.isMenu = isMenu;
         this.clientPanel = clientPanel;
         this.infoProdotto = new JButton("info");
+        this.modificaProdotto = new JButton("Modifica e Aggiungi ");
         this.setBorder(BorderFactory.createCompoundBorder(
                 new MatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY),
                 new EmptyBorder(10, 15, 10, 15)
@@ -60,10 +62,25 @@ public class ProdottoCard extends JPanel {
 
         this.infoProdotto.addActionListener(new ActionListener() {
 
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.err.println(nomeProdotto);
-                clientPanel.requestIngredienti(codiceProdotto);
+                System.out.println("menu valore: " + isMenu);
+                if(isMenu != null){
+                    clientPanel.requestIngredientiMenu(codiceProdotto);
+                } else {
+                    System.out.println("Richiesta ingredienti per prodotto: " + codiceProdotto);
+                    clientPanel.requestIngredienti(codiceProdotto);
+                }
+            }
+
+        });
+
+        this.aggiungiProdotto.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clientPanel.addRigaCarrello(1, nomeProdotto, prezzo);
             }
 
         });

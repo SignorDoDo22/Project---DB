@@ -8,9 +8,10 @@ import java.util.List;
 
 public class ControllerRider {
 
-    private  MainController mainController;
+    private MainController mainController;
     private ReadingModel modelReading;
     private RiderPanel riderPanel;
+
 
     public ControllerRider(MainController mainController, ReadingModel modelReading, RiderPanel riderPanel) {
         this.mainController = mainController;

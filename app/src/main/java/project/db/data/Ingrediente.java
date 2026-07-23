@@ -25,6 +25,26 @@ public class Ingrediente {
         this.codiceIngrediente = codiceIngrediente;
     }
 
+    public Boolean getVegano() {
+        return vegano;
+    }
+
+    public Boolean getSenzaGlutine() {
+        return senzaGlutine;
+    }
+
+    public Boolean getSenzaLattosio() {
+        return senzaLattosio;
+    }
+
+    public String getNomeIngrediente() {
+        return nomeIngrediente;
+    }
+
+    public String getCodiceIngrediente() {
+        return codiceIngrediente;
+    }
+
     public static class DAO {
 
         List<Ingrediente> list(Connection connection){

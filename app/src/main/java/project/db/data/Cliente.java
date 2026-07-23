@@ -117,7 +117,6 @@ public class Cliente {
 
                 ResultSet resultSet = preparedStatement.executeQuery();
             ){
-                System.out.println("Query preparata: " + preparedStatement.toString());
                if (resultSet.next()) {
                    System.out.println("DENTRO MODEL: Utente trovato: " + resultSet.getString("Username"));
                    return mapUtente(resultSet);
@@ -138,7 +137,6 @@ public class Cliente {
                 var resultSet = statement.executeQuery();
             ) {
                 if (resultSet.next()) {
-                    System.out.println("Utente trovato: " + resultSet.getString("Username"));
                     return true;
                 }
 
